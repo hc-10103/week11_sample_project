@@ -10,6 +10,9 @@
 ### 원본 샘플 URL 
 https://github.com/2026-2-OSS/week11_sample_project
 
+### 배포 URL
+https://week11-sample-project-six.vercel.app/
+
 ## 설치 방법
 Node.js 20.19+ 또는 22.12+ 권장.
 
