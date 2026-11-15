@@ -6,6 +6,7 @@ export default function CourseList() {
   // [제공] 초기 배열을 useState로 관리합니다.
   const [courses, setCourses] = useState(initialCourses);
   const [newName, setNewName] = useState('');
+  const [error, setError] = useState('');
 
   // [제공] 삭제 기능: filter로 새 배열을 만들어 업데이트합니다.
   function handleDelete(id) {
@@ -16,7 +17,22 @@ export default function CourseList() {
   // TODO 1 (필수): 과목 추가 기능을 구현하세요.
   function handleAdd(event) {
     event.preventDefault();
-    // TODO: 빈 입력 검사, 새 과목 객체 생성, setCourses 호출, 입력창 초기화
+
+    const name = newName.trim();
+    if (name === '') {
+      return;
+    }
+
+    const newCourse = {
+      id: Math.max(0, ...courses.map(course => course.id)) + 1,
+      name,
+      category: 'Major',
+      completed: false,
+    };
+
+    setCourses(previous => [...previous, newCourse]);
+    setNewName('');
+    setError('');
   }
 
   // TODO 2 (필수): 완료 상태 변경 기능을 구현하세요.
@@ -40,6 +56,7 @@ export default function CourseList() {
           <input className="input" value={newName} onChange={event => setNewName(event.target.value)} placeholder="새 과목명을 입력하세요" aria-label="새 과목명" />
           <button className="btn primary" type="submit">+ Add Course</button>
         </form>
+        {error && <p className="error">{error}</p>}
         <div className="list-head"><span>COURSE</span><span>CATEGORY</span><span>ACTIONS</span></div>
         {courses.length === 0 && <div className="empty">등록된 과목이 없습니다.</div>}
         {courses.map(course => (
